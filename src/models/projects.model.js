@@ -5,7 +5,7 @@ Modelo: Productos
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Proyects = sequelize.define(
+const Project = sequelize.define(
     'Project',
     {
         id: {
@@ -26,11 +26,7 @@ const Proyects = sequelize.define(
             allowNull: false,
             defaultValue: 0.0
         },
-        stock: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
-        },
+        
         estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
@@ -42,4 +38,4 @@ const Proyects = sequelize.define(
     }
 );
 
-module.exports = Proyects;
+module.exports = Project;

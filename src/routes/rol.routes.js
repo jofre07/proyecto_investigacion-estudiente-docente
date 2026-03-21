@@ -16,6 +16,7 @@ const { autenticar } = require('../middlewares/auth.middleware');
 const { autorizar } = require('../middlewares/role.middleware');
 
 router.get('/', autenticar, autorizar('admin'), getRoles);
+//router.get('/', getRoles);
 router.post('/', autenticar, autorizar('admin'), crearRol);
 router.put('/:id', autenticar, autorizar('admin'), actualizarRol);
 router.delete('/:id', autenticar, autorizar('admin'), borrarRol);

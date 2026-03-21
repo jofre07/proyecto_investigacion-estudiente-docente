@@ -9,6 +9,8 @@ const { respuestaExitosa, respuestaErronea } = require('../utils/response');
 
 const registrar = async (req, res) => {
     try {
+        console.log('================================================');
+        
         const { nombres, email, password, rolId } = req.body;
 
         if (!nombres || !email || !password) {

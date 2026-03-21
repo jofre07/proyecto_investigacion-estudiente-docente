@@ -7,6 +7,7 @@ const router = express.Router();
 
 const { registrar, login, perfil } = require('../controllers/auth.controller');
 const { autenticar } = require('../middlewares/auth.middleware');
+const { getRoles } = require('../controllers/rol.controller');
 
 router.post('/registrar', registrar);
 router.post('/login', login);

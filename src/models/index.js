@@ -6,7 +6,7 @@ const sequelize = require('../config/database');
 
 const Rol = require('./role.model');
 const User = require('./user.model');
-const Proyects = require('./projects.model');
+const Project = require('./projects.model');
 
 Rol.hasMany(User, {
     foreignKey: 'rolId',
@@ -19,15 +19,21 @@ User.belongsTo(Rol, {
 });
 
 
-User.hasMany(Proyects, { 
+User.hasMany(Project, { 
     foreignKey: 'usuarioId',
     as: 'projects'
 });
+
+Project.belongsTo( User , {
+    foreignKey: 'usuarioId',
+    as:'usuarios'
+} )
+
 const db = {
     sequelize,
     Rol,
     User,
-    Proyects
+    Project
 };
 
 module.exports = db;

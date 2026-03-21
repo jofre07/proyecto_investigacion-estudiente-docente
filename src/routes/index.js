@@ -8,6 +8,7 @@ const router = express.Router();
 router.use('/auth', require('./auth.routes'));
 router.use('/roles', require('./rol.routes'));
 router.use('/usuarios', require('./user.routes'));
-//router.use('/productos', require('./product.routes'));
+router.use('/proyectos', require('./project.routes'));
+
 
 module.exports = router;
