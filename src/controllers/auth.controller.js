@@ -3,20 +3,20 @@ Controladora de Autenticación
 */
 
 const { User, Rol } = require('../models');
-const { passwordHash, compararClave} = require('../services/auth.service');
+const { passwordHash, compararClave } = require('../services/auth.service');
 const { generarToken } = require('../utils/jwt');
 const { respuestaExitosa, respuestaErronea } = require('../utils/response');
 
-const registrar = async (req, res)=> {
+const registrar = async (req, res) => {
     try {
-        const {nombres, email, password, rolId } = req.body;
+        const { nombres, email, password, rolId } = req.body;
 
         if (!nombres || !email || !password) {
             return respuestaErronea(res, 400, 'Nombre, correo y clave son obligatorios');
         }
 
         // Se busca usuario por email
-        const usuarioExiste = await User.findOne({where: {email} });
+        const usuarioExiste = await User.findOne({ where: { email } });
 
         if (usuarioExiste) {
             return respuestaErronea(res, 409, 'El correo ya está registrado.');
@@ -25,8 +25,8 @@ const registrar = async (req, res)=> {
         let rolasignado = rolId;
 
         if (!rolasignado) {
-            const rolDefecto = await Rol.findOne({ where: { nombre: 'usuario' }});
-            rolasignado =  rolDefecto ? rolDefecto.id : null;
+            const rolDefecto = await Rol.findOne({ where: { nombre: 'usuario' } });
+            rolasignado = rolDefecto ? rolDefecto.id : null;
         }
 
         if (!rolasignado) {
@@ -43,8 +43,8 @@ const registrar = async (req, res)=> {
         });
 
         const rolUsuario = await User.findByPk(usuario.id, {
-            attributes: {exclude: ['password']},
-            include: [{model: Rol, as: 'rol', attributes: ['id', 'nombre']}]
+            attributes: { exclude: ['password'] },
+            include: [{ model: Rol, as: 'rol', attributes: ['id', 'nombre'] }]
         });
 
         const token = generarToken({
@@ -61,20 +61,24 @@ const registrar = async (req, res)=> {
     }
 };
 
-const login = async(req, res) => {
-    console.log(req.body,"1");
+const login = async (req, res) => {
+    console.log(req.body, "1");
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
         if (!email || !password) {
             return respuestaErronea(res, 400, 'Correo y clave son obligatorios.');
         }
 
-        //console.log(req.body,"2");
+        console.log(req.body, "2");
 
         const usuario = await User.findOne({
-            where: {email},
-            include: [{model: 'Rol', as: 'rol', attributes: ['id', 'nombre']}]
+            where: { email },
+            include: [{
+                model: Rol,
+                as: 'rol',
+                attributes: ['id', 'nombre']
+            }]
         });
 
         console.log("22");
@@ -83,7 +87,7 @@ const login = async(req, res) => {
             return respuestaErronea(res, 401, 'Credenciales no válidas.');
         }
         console.log(usuario);
-        console.log(req.body,"4");
+        console.log(req.body, "4");
         if (!usuario.estado) {
             return respuestaErronea(res, 403, 'Usuario inactivo.');
         }
@@ -118,8 +122,8 @@ const login = async(req, res) => {
 const perfil = async (req, res) => {
     try {
         const usuario = await User.findByPk(req.usuario.id, {
-            attributes: {exclude: ['password']},
-            include: [{model: Rol, as: 'rol', attributes: ['id', 'nombres']}]
+            attributes: { exclude: ['password'] },
+            include: [{ model: Rol, as: 'rol', attributes: ['id', 'nombres'] }]
         });
 
         if (!usuario) {

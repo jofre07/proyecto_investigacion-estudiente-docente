@@ -18,6 +18,7 @@ User.belongsTo(Rol, {
     as: 'rol'
 });
 
+
 User.hasMany(Proyects, { 
     foreignKey: 'usuarioId',
     as: 'projects'

@@ -44,7 +44,7 @@ const crearUsuario = async(req, res)=>{
         if (!nombres || !email || !password || !rolId) {
             return respuestaErronea(res, 400, 'Nombres, correo, clave y rol son obligatorios.');
         }
-
+        console.log("22");
         const existeUsuario = await User.findOne({where: {email}});
 
         if (existeUsuario) {
@@ -60,7 +60,7 @@ const crearUsuario = async(req, res)=>{
             rolId,
             estado
         });
-
+        console.log("3");
         const usuarioCreado = await User.findByPk(usuario.id, {
             attributes: { exclude: ['password']},
             include: [{model: 'Rol', as: 'rol', attributes: ['id', 'nombre']}]
