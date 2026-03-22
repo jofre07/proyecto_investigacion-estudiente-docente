@@ -63,10 +63,10 @@ const crearUsuario = async(req, res)=>{
         console.log("3");
         const usuarioCreado = await User.findByPk(usuario.id, {
             attributes: { exclude: ['password']},
-            include: [{model: 'Rol', as: 'rol', attributes: ['id', 'nombre']}]
+            include: [{model: Rol, as: 'rol', attributes: ['id', 'nombre']}]
         });
 
-        return respuestaExitosa(res, 200, 'Usuario creado correctamente.', usuario);
+        return respuestaExitosa(res, 200, 'Usuario creado correctamente.', usuarioCreado);
 
     } catch (error) {
         return respuestaErronea(res, 500, 'Error al crear el usuario.', error.message);

@@ -2,7 +2,7 @@
 Controladora: Projects
 */
 
-const { Project } = require('../models');
+const { Project, Rol} = require('../models');
 const { respuestaExitosa, respuestaErronea } = require('../utils/response');
 
 const getProjects = async (req, res) => {
@@ -12,6 +12,21 @@ const getProjects = async (req, res) => {
 
     } catch (error) {
         return respuestaErronea(res, 500, 'Error al obtener los roles.', error.message);
+    }
+};
+
+const getUProjectId = async (req, res)=> {
+    try {
+        const project = await Project.findByPk(req.params.id);
+
+        if (!project) {
+            return respuestaErronea(res, 404, 'Project no encontrado.');
+        }
+
+        return respuestaExitosa(res, 200, 'Project encontrado.', project);
+
+    } catch (error) {
+        return respuestaErronea(res, 500, 'Error al obtener el project.', error.message);
     }
 };
 
@@ -77,5 +92,6 @@ module.exports = {
     getProjects,
     crearProject,
     actualizarProject,
-    borrarProject
+    borrarProject,
+    getUProjectId
 };

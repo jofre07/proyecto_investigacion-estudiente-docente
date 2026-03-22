@@ -22,9 +22,8 @@ const Project = sequelize.define(
             allowNull: true
         },
         linea_investigacion: {
-            type: DataTypes.DECIMAL(10, 2),
-            allowNull: false,
-            defaultValue: 0.0
+            type: DataTypes.STRING(200),
+            allowNull: true
         },
         
         estado: {
